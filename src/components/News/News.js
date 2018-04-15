@@ -10,16 +10,18 @@ class News extends Component {
             loading: true
         };
         this.getNewsInfo = this.getNewsInfo.bind(this);
+        this.getFixturesInfo = this.getFixturesInfo.bind(this);
     }
 
     componentDidMount() {
-        this.getNewsInfo();
+        //this.getNewsInfo();
+        this.getFixturesInfo();
     };
 
     getNewsInfo(pageSize = '6', page = '1', q = ''){
         let query = '&q='+q+'&pageSize='+pageSize+'&page='+page;
-        const proxyurl = "https://cors-anywhere.herokuapp.com/";
-        const url = 'https://newsapi.org/v2/everything?sources=bbc-sport,talksport&apiKey=' + process.env.REACT_APP_NEWS_API + query + '&sortBy=publishedAt';
+        /*const*/let proxyurl = "https://cors-anywhere.herokuapp.com/";
+        /*const*/let url = 'https://newsapi.org/v2/everything?sources=bbc-sport,talksport&apiKey=' + process.env.REACT_APP_NEWS_API + query + '&sortBy=publishedAt';
         axios.get(proxyurl + url)
             .then(res => {
                 for(let i = 0; i < res.data.articles.length; i++){
@@ -33,7 +35,17 @@ class News extends Component {
             .catch((error) => console.log("Can’t access " + url + " response. Blocked by browser?:" + error));
     }
 
-    
+    getFixturesInfo(){
+        const url = "http://allorigins.me/get?url=http://www.fawsl.com/matches.html";
+        axios.get(url)
+            .then(res => {
+                let el = document.createElement('html');
+                el.innerHTML = res.data.contents;
+                console.log(el.querySelector('table.table-fixtures-results'));
+            })
+            .catch((error) => console.log("Can’t access " + url + " response. Blocked by browser?:" + error));
+    }
+
     render () {
 
         const Loading = this.state.loading ? (
