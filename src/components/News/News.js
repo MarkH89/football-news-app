@@ -9,35 +9,42 @@ class News extends Component {
             posts: [],
             loading: true
         };
+        this.getNewsInfo = this.getNewsInfo.bind(this);
     }
 
     componentDidMount() {
+        this.getNewsInfo();
+    };
+
+    getNewsInfo(pageSize = '6', page = '1', q = ''){
+        let query = '&q='+q+'&pageSize='+pageSize+'&page='+page;
         const proxyurl = "https://cors-anywhere.herokuapp.com/";
-        const url = 'https://newsapi.org/v2/everything?sources=bbc-sport&apiKey=' + process.env.REACT_APP_NEWS_API + '&q=wsl&pageSize=2&page=2&sortBy=publishedAt';
+        const url = 'https://newsapi.org/v2/everything?sources=bbc-sport,talksport&apiKey=' + process.env.REACT_APP_NEWS_API + query + '&sortBy=publishedAt';
         axios.get(proxyurl + url)
             .then(res => {
                 for(let i = 0; i < res.data.articles.length; i++){
                     let article = res.data.articles[i]
                     article.index = res.data.articles.indexOf(article);
                 }
+                console.log(res.data.articles);
                 this.setState({posts: res.data.articles, loading: false});
                 //this.setState({loading: false});
             })
             .catch((error) => console.log("Can’t access " + url + " response. Blocked by browser?:" + error));
-    };
+    }
 
     
     render () {
 
         const Loading = this.state.loading ? (
-            <div class="loading">
+            <div className="loading">
                 loading...
             </div>
         ) : '';
 
         const postItems = this.state.posts.map((post) =>
-            <div className="column is-half">
-                <div className="card" key={post.index}>
+            <div className="column is-one-third" key={post.index}>
+                <div className="card">
                     <div className="card-image">
                         <figure className="image is-4by3">
                             <img src={`${post.urlToImage}`} alt={`${post.title}`} />
@@ -58,7 +65,7 @@ class News extends Component {
                 <section className="container">
                     <div className="columns">
                         <div className="column is-two-thirds">
-                            <div className="columns">
+                            <div className="columns is-multiline">
                             { Loading }
                             { postItems }
                             </div>
