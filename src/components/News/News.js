@@ -20,13 +20,21 @@ class News extends Component {
                     let article = res.data.articles[i]
                     article.index = res.data.articles.indexOf(article);
                 }
-                this.setState({posts: res.data.articles});
-                loading: false;
+                this.setState({posts: res.data.articles, loading: false});
+                //this.setState({loading: false});
             })
             .catch((error) => console.log("Can’t access " + url + " response. Blocked by browser?:" + error));
-    }
+    };
 
+    
     render () {
+
+        const Loading = this.state.loading ? (
+            <div class="loading">
+                loading...
+            </div>
+        ) : '';
+
         const postItems = this.state.posts.map((post) =>
             <div className="column is-half">
                 <div className="card" key={post.index}>
@@ -51,6 +59,7 @@ class News extends Component {
                     <div className="columns">
                         <div className="column is-two-thirds">
                             <div className="columns">
+                            { Loading }
                             { postItems }
                             </div>
                         </div>
