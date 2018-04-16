@@ -9,7 +9,7 @@ class NewsSelect extends Component {
 
     updateNews(event) {
         this.setState({query: event.target.value});
-        this.props.callback(event.target.value);
+        this.props.callback(encodeURI(event.target.value));
     }
 
     render () {
@@ -18,9 +18,10 @@ class NewsSelect extends Component {
                 <form className="news-form">
                     <label className="label" htmlFor="query">Search for:</label>
                     <select value={this.state.query} onChange={this.updateNews} className="select" id="query" name="query">
-                        <option value="">All</option>
+                        <option value="">All News</option>
                         <option value="wsl">WSL</option>
-                        <option value="uefa">UEFA</option>
+                        <option value="FA Women's Cup">FA Women's Cup</option>
+                        <option value="FIFA Women's World Cup">FIFA Women's World Cup</option>
                     </select>
                 </form>
             </div>

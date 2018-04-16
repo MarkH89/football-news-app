@@ -49,19 +49,17 @@ class News extends Component {
 
     render () {
         return (
-            <div className="main-body">
-                <section className="container">
-                    <div className="columns">
-                        <div className="column is-two-thirds">
-                            <NewsSelect query={'wsl'} callback={this.updatePosts} />
-                            <NewsItems posts={this.state.posts} />
-                        </div>
-                        <div className="column is-one-third">
-                            <Fixtures />
-                        </div>
+            <section className="container">
+                <div className="columns">
+                    <div className="column is-7">
+                        <NewsSelect query={'wsl'} callback={this.updatePosts} />
+                        <NewsItems posts={this.state.posts} />
                     </div>
-                </section>
-            </div>
+                    <div className="column is-5">
+                        <Fixtures />
+                    </div>
+                </div>
+            </section>
         )
     }
 }

@@ -12,7 +12,9 @@ class App extends Component {
     return (
       <div>
         <Header />
-        <News query='wsl' pageSize='6' page="1" />
+            <div className="section">
+              <News query='wsl' pageSize='6' page="1" />
+            </div>
         <Footer />
       </div>
     );
