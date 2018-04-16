@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import Banner from '../Banner/Banner';
 
 class Header extends Component {
     render () {
         return (
             <header>
+                <nav className="navbar" role="navigation" aria-label="main navigation">
                 <div className="container">
-                    <nav className="navbar" role="navigation" aria-label="main navigation">
                         <div className="navbar-brand">
                             <a className="navbar-item" href="https://bulma.io">
                                 <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28" />
@@ -23,9 +24,10 @@ class Header extends Component {
                                 <a className="navbar-item" href="#">Results</a>
                             </div>
                         </div>
-                    </nav>
-                </div>
-            </header>
+                    </div>
+                </nav>
+                <Banner />
+            </header>    
         )
     }
 }

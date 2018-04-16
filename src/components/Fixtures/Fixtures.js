@@ -7,7 +7,6 @@ class Fixtures extends Component {
         super(props);
         this.state = {
             fixtures: '',
-            loading: true
         };
         this.getFixturesInfo = this.getFixturesInfo.bind(this);
     }
@@ -82,15 +81,8 @@ class Fixtures extends Component {
     }
 
     render () {
-        const Loading = this.state.loading ? (
-            <div className="loading">
-                loading...
-            </div>
-        ) : '';
-
         return (
             <div className="columns is-multiline">
-                {Loading}
                 <div className="fixtures-container" dangerouslySetInnerHTML={{__html: this.state.fixtures}} />
             </div>
         )
