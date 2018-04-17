@@ -31,6 +31,7 @@ class Fixtures extends Component {
         const url = "http://allorigins.me/get?url=http://www.fawsl.com/matches.html";
         axios.get(url)
             .then(res => {
+                console.log(res);
                 // Response is a HTML dcument, so to read it, we need to attach it to an element
                 let el = document.createElement('html');
                 el.innerHTML = res.data.contents;

@@ -15,8 +15,8 @@ class NewsSelect extends Component {
     render () {
         return (
             <div className="column is-12">
-                <form className="news-form">
-                    <label className="label" htmlFor="query">Search for:</label>
+                <form className="news-form  has-text-right">
+                    <label className="label" htmlFor="query">Show latest for:</label>
                     <select value={this.state.query} onChange={this.updateNews} className="select" id="query" name="query">
                         <option value="">All News</option>
                         <option value="wsl">WSL</option>
