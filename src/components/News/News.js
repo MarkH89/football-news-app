@@ -3,6 +3,8 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import NewsSelect from '../NewsSelect/NewsSelect';
 import NewsItem from '../NewsItem/NewsItem';
 import Fixtures from '../Fixtures/Fixtures';
+import Loading from '../Utilities/Loading/Loading';
+import './News.css';
 import axios from 'axios';
 
 class News extends Component {
@@ -13,7 +15,8 @@ class News extends Component {
             posts: [],
             query: this.props.query,
             page: this.props.page,
-            pageSize: this.props.pageSize
+            pageSize: this.props.pageSize,
+            loadingMsg: 'loading...'
         }
         this.updatePosts = this.updatePosts.bind(this);
         this.getNewsInfo = this.getNewsInfo.bind(this);
@@ -27,7 +30,6 @@ class News extends Component {
         console.log('Getting news info...');
         let proxyurl = "https://cors-anywhere.herokuapp.com/";
         let url = 'https://newsapi.org/v2/everything?sources=bbc-sport,talksport&apiKey=' + process.env.REACT_APP_NEWS_API + '&q=' + query + '&pageSize=' + pageSize + '&page=' + page + '&sortBy=publishedAt';
-        this.setState({posts: []});
         axios.get(proxyurl + url)
             .then(res => {
                 for(let i = 0; i < res.data.articles.length; i++){
@@ -40,6 +42,7 @@ class News extends Component {
     }
 
     updatePosts(query){
+        this.setState({posts: []});
         this.getNewsInfo(query, this.state.pageSize, this.state.page);
     }
 
@@ -49,6 +52,10 @@ class News extends Component {
                 <NewsItem post={post} key={post.index}/>
         );
 
+        const loading = this.state.posts.length === 0 ? (
+            <Loading message={this.state.loadingMsg} />
+        ) : '';
+
         return (
             <section className="container">
                 <div className="columns">
@@ -56,12 +63,13 @@ class News extends Component {
                         <NewsSelect query={'wsl'} callback={this.updatePosts} />
                         <ReactCSSTransitionGroup
                             component="div"
-                            className="columns is-mobile is-multiline"
-                            transitionName="example"
+                            className="columns is-mobile is-multiline posts-container"
+                            transitionName="fade"
                             transitionAppear={true}
                             transitionAppearTimeout={500}
                             transitionEnterTimeout={500}
                             transitionLeaveTimeout={300}>
+                            {loading}
                             {postItems}
                         </ReactCSSTransitionGroup>
                     </div>

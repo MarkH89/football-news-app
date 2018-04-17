@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Loading from '../Utilities/Loading/Loading';
 import axios from 'axios';
 import './Fixtures.css';
 
@@ -8,6 +9,7 @@ class Fixtures extends Component {
         super(props);
         this.state = {
             fixtures: '',
+            loadingMsg: 'Loading...'
         };
         this.fixturesTable = React.createRef();
         this.getFixturesInfo = this.getFixturesInfo.bind(this);
@@ -44,9 +46,15 @@ class Fixtures extends Component {
     }
 
     render () {
+
+        const loading = this.state.fixtures === '' ? (
+            <Loading message={this.state.loadingMsg} />
+        ) : '';
+
         return (
-            <div className="columns is-multiline">
-                <div className="fixtures-container" ref={this.fixturesTable} dangerouslySetInnerHTML={{__html: this.state.fixtures}} />
+            <div className="columns is-multiline fixtures-container">
+                {loading}
+                <div ref={this.fixturesTable} dangerouslySetInnerHTML={{__html: this.state.fixtures}} />
             </div>
         )
     }
